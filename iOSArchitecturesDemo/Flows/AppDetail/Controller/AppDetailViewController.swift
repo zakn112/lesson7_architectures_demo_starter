@@ -14,6 +14,8 @@ final class AppDetailViewController: UIViewController {
     
     
     lazy var headerViewController = AppDetailHeaderViewController(app: app)
+    lazy var descriptionViewController = DescriptionViewController()
+    lazy var newsViewController = NewsViewController(app: app)
     
     
     init(app: ITunesApp) {
@@ -25,18 +27,19 @@ final class AppDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationController()
         self.addHeaderViewController()
         self.addDescriptionViewController()
+        self.addNewsViewController()
     }
     
     
     
     // MARK: - Private
-
+    
     private func addHeaderViewController() {
         self.addChild(self.headerViewController)
         self.view.addSubview(self.headerViewController.view)
@@ -47,26 +50,40 @@ final class AppDetailViewController: UIViewController {
             self.headerViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.headerViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.headerViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor)
-            ])
+        ])
     }
     
     private func addDescriptionViewController() {
-           // TODO: ДЗ, сделать другие сабмодули
-           let descriptionViewController = DescriptionViewController()
-           
-           self.addChild(descriptionViewController)
-           self.view.addSubview(descriptionViewController.view)
-           descriptionViewController.didMove(toParent: self)
-           
-           descriptionViewController.view.translatesAutoresizingMaskIntoConstraints = false
-           NSLayoutConstraint.activate([
-               descriptionViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.bottomAnchor),
-               descriptionViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-               descriptionViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-               descriptionViewController.view.heightAnchor.constraint(equalToConstant: 250.0)
-               ])
-       }
-
+        // TODO: ДЗ, сделать другие сабмодули
+        
+        self.addChild(descriptionViewController)
+        self.view.addSubview(descriptionViewController.view)
+        descriptionViewController.didMove(toParent: self)
+        
+        descriptionViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            descriptionViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.bottomAnchor),
+            descriptionViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            descriptionViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            descriptionViewController.view.heightAnchor.constraint(equalToConstant: 250.0)
+        ])
+    }
+    
+    private func addNewsViewController() {
+        
+        self.addChild(newsViewController)
+        self.view.addSubview(newsViewController.view)
+        newsViewController.didMove(toParent: self)
+        
+        newsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            newsViewController.view.topAnchor.constraint(equalTo: self.descriptionViewController.view.bottomAnchor),
+            newsViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            newsViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            newsViewController.view.heightAnchor.constraint(equalToConstant: 250.0)
+        ])
+    }
+    
     
     private func configureNavigationController() {
         self.navigationController?.navigationBar.tintColor = UIColor.white;
